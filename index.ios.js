@@ -5,9 +5,9 @@ class WTFIsHappening extends Component {
   render() {
     return (
       <View>
-        <ItemName/>
-        <ItemAmt/>
-        <ItemPrice/>
+        <ItemName itemName="bread"/>
+        <ItemAmt itemAmt="10"/>
+        <ItemPrice itemPrice="$0.25"/>
       </View>
     );
   }
@@ -25,7 +25,7 @@ class ItemName extends Component {
   render() {
     return (
       <InfoLabel infoType="Item Name"
-                 info="breadlol"
+                 info={this.props.itemName}
       />
     )
   }
@@ -35,7 +35,7 @@ class ItemAmt extends Component {
   render() {
     return (
       <InfoLabel infoType="Amount"
-                 info="10"
+                 info={this.props.itemAmt}
       />
     )
   }
@@ -45,7 +45,7 @@ class ItemPrice extends Component {
   render() {
     return (
       <InfoLabel infoType="Price"
-                 info="$0.25"
+                 info={this.props.itemPrice}
       />
     )
   }
