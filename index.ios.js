@@ -5,17 +5,48 @@ class WTFIsHappening extends Component {
   render() {
     return (
       <View>
-        <AnotherComponent />
-        <AnotherComponent />
+        <ItemName/>
+        <ItemAmt/>
+        <ItemPrice/>
       </View>
     );
   }
 }
 
-class AnotherComponent extends Component {
+class InfoLabel extends Component {
   render() {
     return (
-      <Text>I am another component.</Text>
+      <Text>{this.props.infoType}: {this.props.info}</Text>
+    )
+  }
+}
+
+class ItemName extends Component {
+  render() {
+    return (
+      <InfoLabel infoType="Item Name"
+                 info="breadlol"
+      />
+    )
+  }
+}
+
+class ItemAmt extends Component {
+  render() {
+    return (
+      <InfoLabel infoType="Amount"
+                 info="10"
+      />
+    )
+  }
+}
+
+class ItemPrice extends Component {
+  render() {
+    return (
+      <InfoLabel infoType="Price"
+                 info="$0.25"
+      />
     )
   }
 }
