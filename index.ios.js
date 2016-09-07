@@ -14,13 +14,20 @@ class WTFIsHappening extends Component {
       jessicaCoors: {
         lat: 37.782736,
         lng: -122.485970
+      },
+      mapCoors: {
+        lat: 37.7749,
+        lng: -122.4194
       }
     };
   }
   render() {
     return (
       <View>
-        <JessicaLocation coors={this.state.jessicaCoors}/>
+        <JessicaLocation
+          coors={this.state.mapCoors}
+          jessica={this.state.jessicaCoors}
+        />
         <ItemView
           item={this.state.item}
         />
@@ -48,6 +55,14 @@ class JessicaLocation extends Component {
     return (
       <MapView
         style={{height:200, margin: 40}}
+        annotations={[
+          {
+            latitude: this.props.jessica.lat,
+            longitude: this.props.jessica.lng,
+            title: "Jessica",
+            subtitle: "Current Location"
+          }
+        ]}
         region={{
           latitude: this.props.coors.lat,
           longitude: this.props.coors.lng,
