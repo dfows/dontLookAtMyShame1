@@ -2,52 +2,24 @@ import React, { Component } from 'react'; // why do i bracket this word "Compone
 import { AppRegistry, View, Text } from 'react-native'; // are these modules. if so, why did i import React and not like, { React } ?!? WHAT IS THIS
 
 class WTFIsHappening extends Component {
+  constructor(props) {
+    super(props); // what this mean "super" oh duh obviously Component
+    this.state = {
+      item: {
+        name: "item",
+        amount: 0,
+        price: "$0"
+      }
+    };
+  }
   render() {
     return (
       <View>
-        <ItemName itemName="bread"/>
-        <ItemAmt itemAmt="10"/>
-        <ItemPrice itemPrice="$0.25"/>
+        <Text>Item Name: {this.state.item.name}</Text>
+        <Text>Number Remaining: {this.state.item.amount}</Text>
+        <Text>Price: {this.state.item.price}</Text>
       </View>
     );
-  }
-}
-
-class InfoLabel extends Component {
-  render() {
-    return (
-      <Text>{this.props.infoType}: {this.props.info}</Text>
-    )
-  }
-}
-
-class ItemName extends Component {
-  render() {
-    return (
-      <InfoLabel infoType="Item Name"
-                 info={this.props.itemName}
-      />
-    )
-  }
-}
-
-class ItemAmt extends Component {
-  render() {
-    return (
-      <InfoLabel infoType="Amount"
-                 info={this.props.itemAmt}
-      />
-    )
-  }
-}
-
-class ItemPrice extends Component {
-  render() {
-    return (
-      <InfoLabel infoType="Price"
-                 info={this.props.itemPrice}
-      />
-    )
   }
 }
 
