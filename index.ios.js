@@ -43,39 +43,62 @@ class WTFIsHappening extends Component {
   }
 
   renderScene(route, navigator) {
-    return (
-      <View>
-        <JessicaLocation
-          coors={this.state.mapCoors}
-          jessica={this.state.jessicaCoors}
-         />
-        <ItemView
-          item={this.state.item}
-        />
-        <TouchableHighlight
-          onPress={
-            () => {
-              const nextIndex = route.index + 1;
-              navigator.push({
-                title: 'wtf'+nextIndex,
-                component: InProgressScene,
-                index: nextIndex
-              });
+    switch(route.id) {
+      case "InProgressScene":
+        return <InProgressScene navigator={navigator} />
+      case "DefaultScene":
+        return (
+          <DefaultScene
+            navigator={navigator}
+            coors={this.state.mapCoors}
+            jessica={this.state.jessicaCoors}
+            item={this.state.item}
+            makeRequest={
+              () => {
+                const nextIndex = route.index + 1;
+                navigator.push({ id: "InProgressScene" });
+              }
             }
-          }
-        >
-          <Text>Get {this.state.item.name}</Text>
-        </TouchableHighlight>
-      </View>
-    )
+          />
+        )
+    }
   }
 
   render() {
     return (
       <Navigator
-        initialRoute={{title: 'wtf', index: 0}}
+        initialRoute={{id: "DefaultScene"}}
         renderScene={(route,nav) => { return this.renderScene(route,nav)}}
       />
+    )
+  }
+}
+
+class DefaultScene extends Component {
+  render() {
+    return (
+      <View>
+        <JessicaLocation
+          coors={this.props.coors}
+          jessica={this.props.jessica}
+         />
+        <ItemView
+          item={this.props.item}
+        />
+        <TouchableHighlight onPress={this.props.makeRequest}>
+          <Text>Get {this.props.item.name}</Text>
+        </TouchableHighlight>
+      </View>
+    )
+  }
+}
+
+class InProgressScene extends Component {
+  render() {
+    return (
+      <View>
+        <Text>Is this how to make a scene what even is a scene</Text>
+      </View>
     )
   }
 }
