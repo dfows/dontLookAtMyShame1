@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // why do i bracket this word "Component"
-import { AppRegistry, View, Text, Image, MapView } from 'react-native'; // are these modules. if so, why did i import React and not like, { React } ?!? WHAT IS THIS
+import { Navigator, AppRegistry, View, TouchableHighlight, Text, Image, MapView } from 'react-native'; // are these modules. if so, why did i import React and not like, { React } ?!? WHAT IS THIS
 import * as firebase from 'firebase'; // yeah like how come i don't just import * from 'react'
 
 class WTFIsHappening extends Component {
@@ -20,6 +20,7 @@ class WTFIsHappening extends Component {
         lng: -122.485970
       },
       mapCoors: {
+        // center of SF
         lat: 37.7749,
         lng: -122.4194
       }
@@ -28,7 +29,7 @@ class WTFIsHappening extends Component {
 
   componentDidMount() {
     // this confusing af
-    this.ordersRef.limitToFirst(1).once('child_added', (snap) => {
+    this.ordersRef.limitToLast(1).once('child_added', (snap) => {
       var order = snap.val();
       this.setState({
         item: {
@@ -43,15 +44,35 @@ class WTFIsHappening extends Component {
 
   render() {
     return (
-      <View>
-        <JessicaLocation
-          coors={this.state.mapCoors}
-          jessica={this.state.jessicaCoors}
-        />
-        <ItemView
-          item={this.state.item}
-        />
-      </View>
+      <Navigator
+        initialRoute={{title: 'wtf', index: 0}}
+        renderScene={(route, navigator) => {
+          return (
+            <View>
+              <JessicaLocation
+                coors={this.state.mapCoors}
+                jessica={this.state.jessicaCoors}
+               />
+              <ItemView
+                item={this.state.item}
+              />
+              <TouchableHighlight
+                onPress={
+                  () => {
+                    const nextIndex = route.index + 1;
+                    navigator.push({
+                      title: 'wtf'+nextIndex,
+                      index: nextIndex
+                    });
+                  }
+                }
+              >
+                <Text>Get {this.state.item.name}</Text>
+              </TouchableHighlight>
+            </View>
+          )
+        }}
+      />
     )
   }
 }
@@ -70,7 +91,6 @@ class ItemView extends Component {
 }
 
 class JessicaLocation extends Component {
-  // the plan for this: center on SF, show my location from state
   render() {
     return (
       <MapView
