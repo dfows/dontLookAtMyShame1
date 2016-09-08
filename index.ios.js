@@ -42,36 +42,39 @@ class WTFIsHappening extends Component {
     });
   }
 
+  renderScene(route, navigator) {
+    return (
+      <View>
+        <JessicaLocation
+          coors={this.state.mapCoors}
+          jessica={this.state.jessicaCoors}
+         />
+        <ItemView
+          item={this.state.item}
+        />
+        <TouchableHighlight
+          onPress={
+            () => {
+              const nextIndex = route.index + 1;
+              navigator.push({
+                title: 'wtf'+nextIndex,
+                component: InProgressScene,
+                index: nextIndex
+              });
+            }
+          }
+        >
+          <Text>Get {this.state.item.name}</Text>
+        </TouchableHighlight>
+      </View>
+    )
+  }
+
   render() {
     return (
       <Navigator
         initialRoute={{title: 'wtf', index: 0}}
-        renderScene={(route, navigator) => {
-          return (
-            <View>
-              <JessicaLocation
-                coors={this.state.mapCoors}
-                jessica={this.state.jessicaCoors}
-               />
-              <ItemView
-                item={this.state.item}
-              />
-              <TouchableHighlight
-                onPress={
-                  () => {
-                    const nextIndex = route.index + 1;
-                    navigator.push({
-                      title: 'wtf'+nextIndex,
-                      index: nextIndex
-                    });
-                  }
-                }
-              >
-                <Text>Get {this.state.item.name}</Text>
-              </TouchableHighlight>
-            </View>
-          )
-        }}
+        renderScene={(route,nav) => { return this.renderScene(route,nav)}}
       />
     )
   }
