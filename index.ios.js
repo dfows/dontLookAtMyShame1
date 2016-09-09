@@ -51,6 +51,11 @@ class WTFIsHappening extends Component {
             navigator={navigator}
             coors={this.state.mapCoors}
             jessica={this.state.jessicaCoors}
+            goBack={
+              () => {
+                navigator.pop();
+              }
+            }
           />
         )
       case "DefaultScene":
@@ -63,7 +68,10 @@ class WTFIsHappening extends Component {
             makeRequest={
               () => {
                 const nextIndex = route.index + 1;
-                navigator.push({ id: "InProgressScene" });
+                navigator.push({
+                  id: "InProgressScene",
+                  index: nextIndex
+                });
               }
             }
           />
@@ -101,6 +109,7 @@ class DefaultScene extends Component {
 }
 
 class InProgressScene extends Component {
+  // ok i need a thing that has a state like "ur order is placed. u cannot take back this action"
   render() {
     return (
       <View style={{margin: 40}}>
@@ -110,6 +119,9 @@ class InProgressScene extends Component {
          />
         <Text>Jessica is on her way.</Text>
         <Text>Please stay put. If you are not there or if you cancel, I will hunt you down and cut you. You will also be charged a $10 fee.</Text>
+        <TouchableHighlight onPress={this.props.goBack}>
+          <Text>hmm actually i want this to be like,,,,,,,,, not going back</Text>
+        </TouchableHighlight>
       </View>
     )
   }
