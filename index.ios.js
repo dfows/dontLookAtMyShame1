@@ -45,7 +45,14 @@ class WTFIsHappening extends Component {
   renderScene(route, navigator) {
     switch(route.id) {
       case "InProgressScene":
-        return <InProgressScene navigator={navigator} />
+        return (
+          //in prog should actually center at your location
+          <InProgressScene
+            navigator={navigator}
+            coors={this.state.mapCoors}
+            jessica={this.state.jessicaCoors}
+          />
+        )
       case "DefaultScene":
         return (
           <DefaultScene
@@ -96,8 +103,13 @@ class DefaultScene extends Component {
 class InProgressScene extends Component {
   render() {
     return (
-      <View>
-        <Text>Is this how to make a scene what even is a scene</Text>
+      <View style={{margin: 40}}>
+        <JessicaLocation
+          coors={this.props.coors}
+          jessica={this.props.jessica}
+         />
+        <Text>Jessica is on her way.</Text>
+        <Text>Please stay put. If you are not there or if you cancel, I will hunt you down and cut you. You will also be charged a $10 fee.</Text>
       </View>
     )
   }
